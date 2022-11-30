@@ -2,6 +2,10 @@
 
 > This is a react based text editor that allows a user to add and style content on the fly without leaving the keyboard.
 
+
+![notion](https://user-images.githubusercontent.com/32932447/204851985-7d8d6874-ef72-43ca-9b84-964ea33d6262.png)
+
+
 ## How it works?
 
 A user has to click the slash command and a set of style will appear 
