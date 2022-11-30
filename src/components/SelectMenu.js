@@ -5,14 +5,19 @@ import React from "react";
 const MENU_HEIGHT = 150;
 const allowedTags = [
     {
-        id: "page-title",
+        id: "heading1",
         tag: "h1",
-        label: "Page Title",
+        label: "Heading 1",
     },
     {
-        id: "heading-1",
+        id: "heading-2",
         tag: "h2",
-        label: "Heading 1",
+        label: "Heading 2",
+    },
+    {
+        id: "paragraph",
+        tag: "p",
+        label: "Paragraph",
     },
 ];
 
@@ -23,7 +28,7 @@ class SelectMenu extends React.Component {
         this.state = {
             command: "",
             items: allowedTags,
-            selected: 0,
+            selectedItem: 0,
         }
     }
 
@@ -35,7 +40,7 @@ class SelectMenu extends React.Component {
         const command = this.state.command;
         if(prevState.command !== command) {
             const items = matchSorter(allowedTags, command, {keys: ["tag"]});
-            this.setState({items});
+            this.setState({items: items});
         }
     }
 
@@ -45,7 +50,7 @@ class SelectMenu extends React.Component {
 
     keyDownHandler(event) {
         const items = this.state.items;
-        const selected = this.state.selected;
+        const selected = this.state.selectedItem;
         const command = this.state.command;
 
         switch(event.key) {
@@ -54,20 +59,19 @@ class SelectMenu extends React.Component {
                 this.props.onSelect(items[selected].tag);
                 break;
             case "Backspace":
-                if(command.length > 0) {
-                    this.setState({command: command.slice(0, -1)});
-                }
+                if(!command) this.props.close();
+                this.setState({command: command.substring(0, command.length - 1)});
                 break;
             case "ArrowUp":
                 event.preventDefault();
                 const prevSelected = selected === 0 ? items.length - 1 : selected - 1;
-                this.setState({selected: prevSelected});
+                this.setState({selectedItem: prevSelected});
                 break;
             case "ArrowDown":
             case "Tab":
                 event.preventDefault();
                 const nextSelected = selected === items.length - 1 ? 0 : selected + 1;
-                this.setState({selected: nextSelected});
+                this.setState({selectedItem: nextSelected});
                 break;
             default:
                 this.setState({command: this.state.command + event.key});
@@ -89,8 +93,8 @@ class SelectMenu extends React.Component {
 
                         return(
                             <div
-                                className={isSelected ? "selected" : ""}
-                                key={item.id}
+                                className={isSelected ? "selected" : null}
+                                key={index}
                                 role= "button"
                                 tabIndex= "0"
                                 onClick={() => this.props.onSelect(item.tag)}

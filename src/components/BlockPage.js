@@ -2,7 +2,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import EditablePage from './EditablePage';
 import { setCaretToEnd } from './helpers/setCaretToEnd';
-const initialState = { id: uuidv4(), html: "", tag: "h1"};
+const initialState = { id: uuidv4(), html: "", tag: "p"};
 
 class BlockPage extends React.Component {
   constructor(props) {
@@ -13,26 +13,26 @@ class BlockPage extends React.Component {
     this.state = { blocks: [initialState] };
   }
 
-  updatePageHandler(block) {
+  updatePageHandler(updatedBlock) {
     const blocks = this.state.blocks;
-    const index = blocks.map((b) => b.id).indexOf(block.id);
+    const index = blocks.map((b) => b.id).indexOf(updatedBlock.id);
     const newBlocks = [...blocks];
     newBlocks[index] = {
         ...newBlocks[index],
-        tag: block.tag,
-        html: block.html,
+        tag: updatedBlock.tag,
+        html: updatedBlock.html,
     };
     this.setState({ blocks: newBlocks });
   }
 
   addBlockHandler(currentBlock) {
-    const newBlocks = { id: uuidv4(), html: "", tag: "h1" };
+    const newBlocks = { id: uuidv4(), html: "", tag: "p" };
     const blocks = this.state.blocks;
     const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
     const updatedBlocks = [...blocks];
     updatedBlocks.splice(index + 1, 0, newBlocks);
     this.setState({ blocks: updatedBlocks }, () => {
-        currentBlock.focus();
+        currentBlock.ref.nextElementSibling.focus();
     });
 
   }
@@ -53,7 +53,7 @@ class BlockPage extends React.Component {
 
   render() {
     return (
-      <div className='border w-[50%] bg-gray-300 text-white'>
+      <div className='mt-4 bg-gray-100 p-4 w-full'>
        {this.state.blocks.map((block, key) => {
         return (
             <EditablePage

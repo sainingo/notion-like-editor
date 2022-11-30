@@ -17,7 +17,7 @@ class EditablePage extends React.Component {
     this.state = {
         htmlBackup: null,
         html: "",
-        tag: "h1",
+        tag: "p",
         previousKey: "",
         selectMenuOpen: false,
         selectMenuPosition: {
@@ -109,7 +109,7 @@ class EditablePage extends React.Component {
 
   render() {
     return (
-     <>
+     < >
       {this.state.selectMenuOpen && (
         <SelectMenu 
         position = {this.state.selectMenuPosition}
@@ -117,8 +117,8 @@ class EditablePage extends React.Component {
         close = {this.closeSelectMenuHandler}
         />
         )}
-        <ContentEditable
-        className="editable"
+        <ContentEditable 
+        className="p-2 focus:outline-none"
         innerRef={this.contentEditable}
         html={this.state.html}
         tagName={this.state.tag}
