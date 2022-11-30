@@ -1,6 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import EditablePage from './EditablePage';
+import { setCaretToEnd } from './helpers/setCaretToEnd';
 const initialState = { id: uuidv4(), html: "", tag: "h1"};
 
 class BlockPage extends React.Component {
@@ -44,7 +45,7 @@ class BlockPage extends React.Component {
         const updatedBlocks = [...blocks];
         updatedBlocks.splice(index, 1);
         this.setState({ blocks: updatedBlocks }, () => {
-            // setCaretToEnd(prevBlock);
+            setCaretToEnd(prevBlock);
             prevBlock.focus();
         });
     }
