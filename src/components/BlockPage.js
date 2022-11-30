@@ -53,7 +53,7 @@ class BlockPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='border w-[50%] bg-gray-300 text-white'>
        {this.state.blocks.map((block, key) => {
         return (
             <EditablePage

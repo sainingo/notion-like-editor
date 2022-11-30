@@ -1,9 +1,16 @@
 import React from "react";
 import ContentEditable from "react-contenteditable";
+import { getCaretCoordinates } from "./helpers/getCaretCoordinate";
+import { setCaretToEnd } from "./helpers/setCaretToEnd";
+import SelectMenu from "./SelectMenu";
 
 class EditablePage extends React.Component {
   constructor(props) {
     super(props);
+    this.onKeyUpHandler = this.onKeyUpHandler.bind(this);
+    this.openSelectMenuHandler = this.openSelectMenuHandler.bind(this);
+    this.closeSelectMenuHandler = this.closeSelectMenuHandler.bind(this);
+    this.tagSelectionHandler = this.tagSelectionHandler.bind(this);
     this.onKeyDownHandler = this.onKeyDownHandler.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.contentEditable = React.createRef();
@@ -12,6 +19,11 @@ class EditablePage extends React.Component {
         html: "",
         tag: "h1",
         previousKey: "",
+        selectMenuOpen: false,
+        selectMenuPosition: {
+          x: null,
+          y: null,
+        }
     };
   }
 
@@ -60,18 +72,61 @@ class EditablePage extends React.Component {
     this.setState({previousKey: event.key});
   }
 
+  onKeyUpHandler(event) {
+    if(event.key === "/") {
+      this.openSelectMenuHandler(event);
+    }
+  }
 
+  openSelectMenuHandler(event) {
+    const { x , y} = getCaretCoordinates();
+    this.setState({
+      selectMenuOpen: true,
+      selectMenuPosition: {x, y }
+    });
+    document.addEventListener("click", this.closeSelectMenuHandler);
+  }
+
+
+  closeSelectMenuHandler(event) {
+    this.setState({
+      htmlBackup: null,
+      selectMenuOpen: false,
+      selectMenuPosition: {
+        x: null,
+        y: null,
+      }
+    });
+    document.removeEventListener("click", this.closeSelectMenuHandler);
+  }
+
+  tagSelectionHandler(tag) {
+    this.setState({tag, html: this.state.htmlBackup}, () => {
+      setCaretToEnd(this.contentEditable.current);
+      this.closeSelectMenuHandler();
+    });
+  }
 
   render() {
     return (
-      <ContentEditable
-      className="editable"
-      innerRef={this.contentEditable}
-      html={this.state.html}
-      tagName={this.state.tag}
-      onChange={this.onChangeHandler}
-      onKeyDown={this.onKeyDownHandler}
-      />
+     <>
+      {this.state.selectMenuOpen && (
+        <SelectMenu 
+        position = {this.state.selectMenuPosition}
+        onSelect = {this.tagSelectionHandler}
+        close = {this.closeSelectMenuHandler}
+        />
+        )}
+        <ContentEditable
+        className="editable"
+        innerRef={this.contentEditable}
+        html={this.state.html}
+        tagName={this.state.tag}
+        onChange={this.onChangeHandler}
+        onKeyDown={this.onKeyDownHandler}
+        onKeyUp={this.onKeyUpHandler}
+        />
+     </>
     );
   }
 }
