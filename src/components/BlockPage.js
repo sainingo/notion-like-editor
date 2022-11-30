@@ -4,6 +4,7 @@ import EditablePage from './EditablePage';
 import { setCaretToEnd } from './helpers/setCaretToEnd';
 const initialState = { id: uuidv4(), html: "", tag: "p"};
 
+
 class BlockPage extends React.Component {
   constructor(props) {
     super(props);
