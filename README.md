@@ -2,15 +2,16 @@
 
 > This is a react based text editor that allows a user to add and style content on the fly without leaving the keyboard.
 
+
 ## How it works?
 
 A user has to click the slash command and a set of style will appear 
 
 > A user can as well use the following commands:
 
- - Heading h1 > click 1
- - Heading h2 > click 2
- - Paragragh p > click 3
+ - Heading h1 > / 1
+ - Heading h2 > / 2
+ - Paragragh p > / 3
 
  ## Technologies used
 
