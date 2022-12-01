@@ -2,6 +2,11 @@
 
 > This is a react based text editor that allows a user to add and style content on the fly without leaving the keyboard.
 
+![not](https://user-images.githubusercontent.com/32932447/204973270-17a08e1c-904f-4a50-9b66-723ef8fd86dc.png)
+
+
+[live demo](https://notion-like-editor.vercel.app/)
+
 
 ## How it works?
 
