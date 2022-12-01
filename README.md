@@ -12,6 +12,10 @@
 
 A user has to click the slash command and a set of style will appear 
 
+![slash](https://user-images.githubusercontent.com/32932447/204973902-75829952-0fa6-47f2-8eeb-0e215a3274ef.png)
+
+
+
 > A user can as well use the following commands:
 
  - Heading h1 > / 1
